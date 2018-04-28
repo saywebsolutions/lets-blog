@@ -1,16 +1,28 @@
 {
     "name": "saywebsolutions/lets-blog",
-    "version": "0.0.2",
+    "version": "0.0.1",
     "type": "package",
-    "description": "Blogging solution for Laravel 5.5",
-    "keywords": ["laravel 5", "laravel", "5", "5.5", "blog", "lets-blog", "letsblog", "blogging", "cms"],
+    "description": "Blogging package for Laravel 5",
+    "keywords": [
+        "say web solutions",
+        "saywebsolutions",
+        "laravel 5",
+        "laravel",
+        "publishing",
+        "blog",
+        "lets-blog",
+        "letsblog",
+        "blogging",
+        "cms"
+    ],
     "homepage": "https://github.com/saywebsolutions/lets-blog",
     "license": "MIT",
     "authors": [
         {
-            "name": "saywebsolutions",
+            "name": "Kyle Jones",
             "email": "kyle@saywebsolutions.com",
-            "homepage": "https://saywebsolutions.com"
+            "homepage": "https://saywebsolutions.com",
+            "role": "Developer"
         }
     ],
     "autoload": {
