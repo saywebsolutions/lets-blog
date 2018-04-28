@@ -1,0 +1,1 @@
+/var/www/spaoa/app/views/redirects/show.blade.php
