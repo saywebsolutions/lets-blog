@@ -13,7 +13,7 @@ class CreateLetsBlogTagsTable extends Migration
             $t->increments('id')->unsigned();
             $t->string('slug', 255)->unique();
             $t->string('name', 255);
-            $t->integer('count')->unsigned()->default(0)->index();
+            $t->integer('posts_count')->unsigned()->default(0)->index();
             $t->timestamps();
 
             $t->index('created_at');
