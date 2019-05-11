@@ -14,9 +14,9 @@
       <thead>
         <tr>
           <th>Title</th>
-          <th>Published At</th>
-          <th>Created At</th>
-          <th>Updated At</th>
+          <th>Published</th>
+          <th>Created</th>
+          <th>Updated</th>
           <th></th>
         </tr>
       </thead>
@@ -26,7 +26,7 @@
           <td><a href="/posts/{!! $p->slug !!}" target="_blank">{{ $p->title }}</a></td>
           <td>
             @if ( ! empty($p->published_at) AND $p->published_at->timestamp < strtotime('now'))
-              <span style="color:darkgreen;">{{ $p->published_at->format('Y-m-d H:i:s') }}</span>
+              <span style="color:darkgreen;">{{ $p->published_at->format('Y-m-d') }}</span>
             @elseif ( ! empty($p->published_at) AND $p->published_at->timestamp > strtotime('now'))
               <span style="color:darkblue;">{{ $p->published_at->format('Y-m-d H:i:s') }}</span>
             @else

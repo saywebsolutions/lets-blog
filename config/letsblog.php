@@ -10,6 +10,9 @@ return [
 //        'admin_path' => 'admin',
         'admin_path' => 'false',
 
+        //enable admin section
+        'admin' => 'false',
+
         //default theme
 //        'theme' => 'letsblog::themes.default'
 
