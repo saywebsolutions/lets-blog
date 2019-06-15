@@ -10,7 +10,7 @@ class PostController extends BaseController
 {
     public function index()
     {
-		return view('letsblog::themes.master', [
+        return view('letsblog::themes.master', [
             'view' => lb_view('post.index'),
             'posts' => LetsBlog::published(),
             'series' => LetsBlog::series(),
@@ -23,7 +23,7 @@ class PostController extends BaseController
 
         $post = LetsBlog::post();
 
-        if ( ! $post) {
+        if (! $post) {
             return self::notfound();
         }
 

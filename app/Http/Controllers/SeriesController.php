@@ -21,7 +21,7 @@ class SeriesController extends BaseController
     {
         $part = Series::where('slug', $slug)->first();
 
-        if ( ! $part) {
+        if (! $part) {
             return self::notfound();
         }
         return view('letsblog::themes.master', [

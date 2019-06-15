@@ -18,7 +18,7 @@ class Type
 
     public function handle()
     {
-        if ( ! $path = $this->folderExists()) {
+        if (! $path = $this->folderExists()) {
             throw new Exception('Folder "' . $this->getFullPath() . '" does not exist');
         }
 
@@ -27,12 +27,11 @@ class Type
         $identifiers = [];
 
         foreach ($files as $file) {
-
             // pull the markdown file (post content and header meta fields)
             $fields = Parser::parse($file);
 
             // default to filename without extension for `identifier` field
-            if ( ! isset($fields['identifier'])) {
+            if (! isset($fields['identifier'])) {
                 $fields['identifier'] = explode('.', basename($file))[0];
             }
 
@@ -105,7 +104,7 @@ class Type
     {
         $path = $this->getFullPath();
 
-        if ( ! file_exists($path)) {
+        if (! file_exists($path)) {
             return false;
         }
 

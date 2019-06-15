@@ -61,7 +61,7 @@ class LetsBlog
         $post = Post::where('slug', $slug)->with('tags', 'series')->first();
 
         //TODO - check for logged in admin and allow preview, add published_at logic
-        if ($post && $post->type === 'post' && ($post->published_at === null || $post->status !== 'active') ) {
+        if ($post && $post->type === 'post' && ($post->published_at === null || $post->status !== 'active')) {
             return null;
         }
 

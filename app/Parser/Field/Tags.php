@@ -8,40 +8,40 @@ use SayWebSolutions\LetsBlog\Models\Tag;
 
 class Tags
 {
-	public static function process($key, $val, $data)
-	{
+    public static function process($key, $val, $data)
+    {
         return $data;
-	}
+    }
 
-	public static function handle($key, $val, $post)
-	{
+    public static function handle($key, $val, $post)
+    {
 
 /*
-		$tag_list = explode(',', $val);
+        $tag_list = explode(',', $val);
         dd($tag_list);
-		
-		$tags = [];
 
-		foreach ($tag_list as $v) {
-			$v = trim($v);
+        $tags = [];
 
-			if (empty($v)) {
-				continue;
-			}
+        foreach ($tag_list as $v) {
+            $v = trim($v);
 
-			$slug = str_slug($v);
-			
-			$tag = Tag::where('slug', $slug)->first();
+            if (empty($v)) {
+                continue;
+            }
 
-			if ( ! $tag) {
-				$tag = Tag::create([
-					'slug' => $slug,
-					'name' => $v
-				]);
-			}
+            $slug = str_slug($v);
 
-			array_push($tags, $tag);
-		}
+            $tag = Tag::where('slug', $slug)->first();
+
+            if ( ! $tag) {
+                $tag = Tag::create([
+                    'slug' => $slug,
+                    'name' => $v
+                ]);
+            }
+
+            array_push($tags, $tag);
+        }
 
 /*   */
 
@@ -50,36 +50,33 @@ class Tags
         //check if tag array is empty, if it is we will sync a blank array (to remove all tags for this post from the pivot table
         $tag_ids = [];
 
-        foreach($tag_list as $tag_name)
-        {
+        foreach ($tag_list as $tag_name) {
             $tag_name = trim($tag_name);
             $tag = Tag::where('slug', str_slug($tag_name))->first();
 
-            if( ! $tag){
+            if (! $tag) {
                 $tag = Tag::create(['name' => $tag_name, 'slug' => str_slug($tag_name)]);
-            }   
+            }
 
             //store tag id in array for sync operation after foreach
             $tag_ids[] = $tag->id;
+        }
 
-        }   
+        $tags_old = $post->tags->pluck('id')->toArray();
 
-		$tags_old = $post->tags->pluck('id')->toArray();
+        $diff = array_merge(array_diff($tags_old, $tag_ids), array_diff($tag_ids, $tags_old));
 
-		$diff = array_merge(array_diff($tags_old, $tag_ids), array_diff($tag_ids, $tags_old));
+        if (count($diff) > 0) {
+            $post->tags()->sync($tag_ids);
+            echo 'Updated Tags: ' . $val . "\n";
+        }
+    }
 
-		if (count($diff) > 0) {
-		    $post->tags()->sync($tag_ids);
-			echo 'Updated Tags: ' . $val . "\n";
-		}
-
-	}
-
-	public function cleanup()
-	{
+    public function cleanup()
+    {
 
 /*
-		$prefix = config('letsblog.table.prefix');
+        $prefix = config('letsblog.table.prefix');
 
         // Clean out any old pivot data.
 //        DB::statement("DELETE {$prefix}_post_tag
@@ -96,9 +93,8 @@ class Tags
         DB::table($prefix . '_tags')->update([
             'posts_count' => DB::Raw("(SELECT COUNT(*) FROM {$prefix}_post_tag WHERE {$prefix}_post_tag.tag_id = {$prefix}_tags.id)")
         ]);
-        
+
         Tag::where('posts_count', 0)->delete();
 /*   */
-
-	}
+    }
 }

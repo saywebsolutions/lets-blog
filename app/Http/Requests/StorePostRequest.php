@@ -28,45 +28,43 @@ class StorePostRequest extends FormRequest
     public function rules()
     {
 
-      $table = config('letsblog.table.prefix').'_posts';
+        $table = config('letsblog.table.prefix').'_posts';
 
-      $rules = [
+        $rules = [
         'title' => "required|unique:{$table}",
         'slug' => "required|unique:{$table}",
         'keywords' => 'required',
         'meta' => 'required',
         'body' => 'required'
-      ];
+        ];
 
-      switch($this->method())
-      {
+        switch ($this->method()) {
+            case 'GET':
+            case 'DELETE':
+            {
+              return [];
+            }
 
-        case 'GET':
-        case 'DELETE':
-        {
-          return [];
+            case 'POST':
+            {
+
+                return $rules;
+
+            }
+
+            case 'PUT':
+            case 'PATCH':
+            {
+
+                $rules['title'] .= ',id,' . $this->posts;
+                $rules['slug'] .= ',id,' . $this->posts;
+
+              return $rules;
+
+            }
+
+            default:
+                break;
         }
-
-        case 'POST':
-        {
-
-          return $rules;
-
-        }
-
-        case 'PUT':
-        case 'PATCH':
-        {
-
-          $rules['title'] .= ',id,' . $this->posts;
-          $rules['slug'] .= ',id,' . $this->posts;
-
-          return $rules;
-
-        }
-
-        default: break;
-
     }
-  }
 }

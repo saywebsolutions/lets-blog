@@ -4,8 +4,8 @@ namespace SayWebSolutions\LetsBlog\Parser;
 
 class Parser
 {
-	public static function parse($file)
-	{
+    public static function parse($file)
+    {
         preg_match('/^\-{3}(.*?)\-{3}(.*)/s', file_get_contents($file), $m);
 
         // the contents of the post
@@ -20,10 +20,9 @@ class Parser
 
         // each post property
         foreach ($head as $h) {
-
             //TODO - there is possibly a bug here - $key may get accessed before being set
             if (substr(trim($h), 0, 1) === '-' && ! empty($last)) {
-                if ( ! is_array($data[$key])) {
+                if (! is_array($data[$key])) {
                     $data[$key] = [];
                 }
                 $key = $last;
@@ -38,7 +37,7 @@ class Parser
         }
 
         return $data;
-	}
+    }
 
     /**
      * undocumented function
@@ -55,17 +54,15 @@ class Parser
         $data = [];
 
         foreach ($fields as $key => $val) {
-
             // name parsers in camel case with first char capitalized
             $class = $path . ucfirst(camel_case($key));
 
             // default to Meta class if no match
-            if ( ! class_exists($class) or ! method_exists($class, 'process')) {
+            if (! class_exists($class) or ! method_exists($class, 'process')) {
                 $class = "{$path}Meta";
             }
 
             $data = $class::process($key, $val, $data);
-
         }
 
         return $data;
@@ -75,7 +72,6 @@ class Parser
     {
 
         foreach ($fields as $key => $val) {
-
             $class = __NAMESPACE__ . '\Field\\' . ucfirst(camel_case($key));
 
             if (class_exists($class) && method_exists($class, 'handle')) {
@@ -83,5 +79,4 @@ class Parser
             }
         }
     }
-
 }

@@ -23,7 +23,7 @@ class TagController extends BaseController
 
         $tag = Tag::where('slug', $slug)->first();
 
-        if ( ! $tag) {
+        if (! $tag) {
             return self::notfound();
         }
         
@@ -34,7 +34,6 @@ class TagController extends BaseController
             'series' => LetsBlog::series(),
             'top' => LetsBlog::top()
         ]);
-
     }
 
     public function notfound()

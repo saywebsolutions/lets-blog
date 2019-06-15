@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
-	public $guarded = [];
+    public $guarded = [];
 
     public function __construct(array $attributes = [])
     {
@@ -28,15 +28,13 @@ class Tag extends Model
     public static function updateCounts()
     {
 //        foreach(self::withCount('posts')->get() as $tag) {
-        foreach(self::get() as $tag) {
+        foreach (self::get() as $tag) {
             //TODO
             dd($tag);
-            if($tag->count != $tag->posts_count) {
+            if ($tag->count != $tag->posts_count) {
                 $tag->count = $tag->posts_count;
                 $tag->save();
             }
         }
     }
-
-
 }

@@ -13,7 +13,7 @@ class Series
 
         $series = SeriesModel::where('slug', $slug)->first();
 
-        if ( ! $series) {
+        if (! $series) {
             $series = SeriesModel::create([
                 'slug' => $slug,
                 'title' => $val

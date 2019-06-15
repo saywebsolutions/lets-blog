@@ -8,12 +8,13 @@ class LetsBlogServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->bind('letsblog', function() {
+        $this->app->bind('letsblog', function () {
             return new LetsBlog;
         });
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/letsblog.php', 'letsblog'
+            __DIR__ . '/../../config/letsblog.php',
+            'letsblog'
         );
 
         $this->commands([
@@ -43,11 +44,10 @@ class LetsBlogServiceProvider extends ServiceProvider
 
         require __DIR__ . '/../Http/routes.php';
 
-	    $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'letsblog');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'letsblog');
 
 //        $router->aliasMiddleware('lb_web', [
 //            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
 //        ]);
-
     }
 }

@@ -31,19 +31,17 @@ class AdminController extends Controller
     public function index()
     {
 
-      $totalPosts = Post::published()->count();
-      $totalTags = Tag::count();
-      $totalSeries = Series::count();
+        $totalPosts = Post::published()->count();
+        $totalTags = Tag::count();
+        $totalSeries = Series::count();
 
 //      Tag::updateCounts();
 
-      return view('letsblog::themes.master', [
+        return view('letsblog::themes.master', [
         'view' => lb_view('admin.index'),
         'totalPosts' => $totalPosts,
         'totalTags' => $totalTags,
         'totalSeries' => $totalSeries,
-      ]);
-
+        ]);
     }
-
 }

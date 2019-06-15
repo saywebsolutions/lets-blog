@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
 
-//	protected $dates = ['published_at'];
-	protected $dates = ['created_at', 'updated_at', 'published_at'];
+//  protected $dates = ['published_at'];
+    protected $dates = ['created_at', 'updated_at', 'published_at'];
 
-	public $guarded = ['id'];
+    public $guarded = ['id'];
 
     public function __construct(array $attributes = [])
     {
@@ -31,7 +31,7 @@ class Post extends Model
 
     public function scopeSearch($q, $search)
     {
-        return $q->whereRaw("MATCH (`title`, `body`) AGAINST (?)" , [$search]);
+        return $q->whereRaw("MATCH (`title`, `body`) AGAINST (?)", [$search]);
     }
 
     public function getUrlAttribute()
@@ -47,7 +47,7 @@ class Post extends Model
 /*
     public function getMetaAttribute($val)
     {
-    	return json_decode($val);
+        return json_decode($val);
     } /*   */
 
     public function getButtonsAttribute()
@@ -67,12 +67,11 @@ class Post extends Model
 
     public static function getRecentPosts()
     {
-        return Post::published()->with('tags')->orderBy('created_at','desc')->limit(18)->get();
+        return Post::published()->with('tags')->orderBy('created_at', 'desc')->limit(18)->get();
     }
 
     public static function getAllTypes()
-    {   
+    {
         return self::distinct()->pluck('type')->toArray();
     }
-
 }

@@ -13,7 +13,7 @@ class RedirectFrom
 
     public static function handle($key, $val, $post)
     {
-        if ( ! is_array($val)) {
+        if (! is_array($val)) {
             $val = [$val];
         }
 
@@ -45,8 +45,7 @@ class RedirectFrom
                     $redirect->save();
                     echo 'Update Redirect: ' . $redirect_from . "\n";
                 }
-            }
-            else {
+            } else {
                 $redirect = Post::create($data);
 
                 echo 'New Redirect: ' . $redirect_from . "\n";
@@ -65,7 +64,7 @@ class RedirectFrom
             ->where('meta', 'LIKE', '%"redirect_to":"' . str_replace('/', "\\\/", $post->slug) . '"%')
             ->get();
 
-        if ( ! $posts->isEmpty()) {
+        if (! $posts->isEmpty()) {
             Post::whereIn('id', $posts->lists('id')->toArray())->delete();
 
             foreach ($posts as $p) {
