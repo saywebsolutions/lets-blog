@@ -2,7 +2,7 @@
 
 A simple command line, markdown based blog add-on package for Laravel including support for tags and series of related posts.
 
-## Installing
+## Install and Quick Start
 
 Include the package via composer:
 
@@ -30,7 +30,7 @@ php artisan vendor:publish --provider="SayWebSolutions\LetsBlog\Providers\LetsBl
 
 Find the config file in `config/letsblog.php`. 
 
-Migrate the Let's Blog tables:
+### Migrate the Let's Blog Tables:
 
 ~~~
 php artisan migrate --path=/vendor/saywebsolutions/lets-blog/database/migrations
@@ -64,7 +64,6 @@ meta: LetsBlog package released for Laravel.
 keywords: letsblog, package, laravel, release
 published_at: 2018-03-17
 tags: LetsBlog, Laravel
-series: LetsBlog Package
 ---
 
 ## Post Title
@@ -73,7 +72,7 @@ Post contents...
 
 ~~~
 
-You can set any fields in the top section of the file. Any that DO NOT have a parser will just get tossed into a default `meta` field. Otherwise if a parser is found it will run. The parsers can manipulate a `data` object which ultimately get's passed into the `create` method for the `posts` table.
+You can set any fields in the top section (front matter) of the file. The [available parsers](https://github.com/saywebsolutions/lets-blog/tree/master/app/Parser/Field "LetsBlog Post Field Parsers") recieve the data defined in the front matter for each field, and can manipulate that data prior to being saved to the `posts` table.
 
 Current parsers are:
 
@@ -81,9 +80,9 @@ Current parsers are:
 * Meta (description)
 * Body
 * PublishedAt
-* Permalink (`slug`)
+* Slug (if not defined will fallback to filename)
 * Tags
-* Series
+* Series (optional name of the series to which to post belongs)
 
 ## Migrations
 
