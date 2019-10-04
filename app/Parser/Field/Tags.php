@@ -16,35 +16,6 @@ class Tags
     public static function handle($key, $val, $post)
     {
 
-/*
-        $tag_list = explode(',', $val);
-        dd($tag_list);
-
-        $tags = [];
-
-        foreach ($tag_list as $v) {
-            $v = trim($v);
-
-            if (empty($v)) {
-                continue;
-            }
-
-            $slug = str_slug($v);
-
-            $tag = Tag::where('slug', $slug)->first();
-
-            if ( ! $tag) {
-                $tag = Tag::create([
-                    'slug' => $slug,
-                    'name' => $v
-                ]);
-            }
-
-            array_push($tags, $tag);
-        }
-
-/*   */
-
         $tag_list = explode(',', $val);
 
         //check if tag array is empty, if it is we will sync a blank array (to remove all tags for this post from the pivot table

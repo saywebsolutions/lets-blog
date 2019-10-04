@@ -3,8 +3,8 @@
 namespace SayWebSolutions\LetsBlog\Parser;
 
 use Exception;
-use SayWebSolutions\LetsBlog\Models\Post;
 use Illuminate\Support\Facades\File;
+use SayWebSolutions\LetsBlog\Models\Post;
 use SayWebSolutions\LetsBlog\Parser\Parser;
 
 class Type
@@ -18,8 +18,8 @@ class Type
 
     public function handle()
     {
-        if (! $path = $this->folderExists()) {
-            throw new Exception('Folder "' . $this->getFullPath() . '" does not exist');
+        if ( ! $path = $this->folderExists()) {
+            throw new Exception('Folder "'.$this->getFullPath().'" does not exist');
         }
 
         $files = File::files($path);
@@ -27,12 +27,18 @@ class Type
         $identifiers = [];
 
         foreach ($files as $file) {
+
             // pull the markdown file (post content and header meta fields)
             $fields = Parser::parse($file);
 
             // default to filename without extension for `identifier` field
-            if (! isset($fields['identifier'])) {
+            if (empty($fields['identifier'])) {
                 $fields['identifier'] = explode('.', basename($file))[0];
+            }
+
+            // auto generate slug from filename if slug field not present
+            if (empty($fields['slug'])) {
+                $fields['slug'] = explode('.', basename($file))[0];
             }
 
             $data = Parser::process($fields);

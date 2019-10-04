@@ -2,6 +2,8 @@
 
 namespace SayWebSolutions\LetsBlog\Parser;
 
+use Exception;
+
 class Parser
 {
     public static function parse($file)
@@ -9,9 +11,7 @@ class Parser
         preg_match('/^\-{3}(.*?)\-{3}(.*)/s', file_get_contents($file), $m);
 
         // the contents of the post
-        $data = [
-            'body' => $m[2]
-        ];
+        $data = ['body' => $m[2]];
         
         $last = '';
 
@@ -20,19 +20,26 @@ class Parser
 
         // each post property
         foreach ($head as $h) {
-            //TODO - there is possibly a bug here - $key may get accessed before being set
-            if (substr(trim($h), 0, 1) === '-' && ! empty($last)) {
-                if (! is_array($data[$key])) {
+
+            $h = trim($h);
+
+            //parse redirects
+            if (substr($h, 0, 1) === '-' && ! empty($last)) {
+
+                if (isset($key) && ! is_array($data[$key])) {
                     $data[$key] = [];
                 }
                 $key = $last;
-                $val = trim(trim(trim($h), '-'));
+                $val = trim(trim($h, '-'));
                 array_push($data[$key], $val);
+
+            //parse regular fields (ex. title, slug, keywords, etc.)
             } elseif (preg_match('/(.*?)\:(.*)/', $h, $m)) {
-                $key = trim($m[1]);
+
+                $key = $last = trim($m[1]);
                 $val = trim($m[2]);
                 $data[$key] = $val;
-                $last = $key;
+
             }
         }
 
@@ -54,15 +61,16 @@ class Parser
         $data = [];
 
         foreach ($fields as $key => $val) {
+
             // name parsers in camel case with first char capitalized
-            $class = $path . ucfirst(camel_case($key));
+            $class = $path.ucfirst(camel_case($key));
 
-            // default to Meta class if no match
-            if (! class_exists($class) or ! method_exists($class, 'process')) {
-                $class = "{$path}Meta";
+            // throw exception if no class for current field type
+            if ( ! class_exists($class) or ! method_exists($class, 'process')) {
+                throw new Exception('Class for field type: "'. $class.'" does not exist');
+            }else{
+                $data = $class::process($key, $val, $data);
             }
-
-            $data = $class::process($key, $val, $data);
         }
 
         return $data;

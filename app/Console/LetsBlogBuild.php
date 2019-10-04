@@ -2,8 +2,9 @@
 
 namespace SayWebSolutions\LetsBlog\Console;
 
-//use Carbon\Carbon;
+use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use SayWebSolutions\LetsBlog\Parser\Type\Page;
 use SayWebSolutions\LetsBlog\Parser\Type\Post;
 use SayWebSolutions\LetsBlog\Parser\Field\Tags;
@@ -32,10 +33,15 @@ class LetsBlogBuild extends Command
     */
     public function handle()
     {
+
         $path = base_path(config('letsblog.app.path'));
 
+        if ( ! File::exists($path)) {
+            throw new Exception('Folder "'. $path.'" does not exist');
+        }
+
         (new Post($path))->handle();
-//        (new Page($path))->handle();
+        (new Page($path))->handle();
 
         // TODO: Where to register these cleanup functions?
         (new Tags)->cleanup();

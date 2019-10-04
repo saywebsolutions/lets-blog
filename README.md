@@ -10,20 +10,33 @@ Include the package via composer:
 composer require "saywebsolutions/letsblog"
 ~~~
 
-Add provider to `config/app`:
+Add the service provider to `config/app.php`:
 
 ~~~
 'providers' => [
+    ...
 	SayWebSolutions\LetsBlog\Providers\LetsBlogServiceProvider::class,
 	...
 ]
 ~~~
 
+### Publish the Config File
+
+The best way to get a sense of the config options is to publish the config and take a look at the file:
+
+~~~
+php artisan vendor:publish --provider="SayWebSolutions\LetsBlog\Providers\LetsBlogServiceProvider" --tag=config
+~~~
+
+Find the config file in `config/letsblog.php`. 
+
 Migrate the Let's Blog tables:
 
 ~~~
-php artisan migrate --path=/vendor/saywebsolutions/letsblog/database/migrations
+php artisan migrate --path=/vendor/saywebsolutions/lets-blog/database/migrations
 ~~~
+
+Your main blade layout must be named `app.blade.php` for the default theme to work out of the box; if not, there is a config key `theme_extends` that will allow you to define the blade layout to extend.
 
 Navigate to `/blog` and see the default blog page.
 
@@ -72,20 +85,12 @@ Current parsers are:
 * Tags
 * Series
 
-## Config
-
-The best way to get a sense of the config options is to just publish the config and take a look:
-
-~~~
-php artisan vendor:publish --provider="SayWebSolutions\LetsBlog\Providers\LetsBlogServiceProvider" --tag=config
-~~~
-
 ## Migrations
 
 The migration can be run directly from the packages `migrations` folder:
 
 ~~~
-php artisan migrate --path=/vendor/saywebsolutions/letsblog/database/migrations
+php artisan migrate --path=/vendor/saywebsolutions/lets-blog/database/migrations
 php artisan migrate:rollback
 ~~~
 
@@ -133,7 +138,7 @@ In many cases you will want to add some customization to the layout to include s
 To start, create an `overrides` file in the views directory:
 
 ```
-/resources/views/vendor/letsblog/themes/overrides.blade.php
+/resources/views/vendor/lets-blog/themes/overrides.blade.php
 ```
 
 From there the following section blocks can be used which hopefully are self explanatory.
