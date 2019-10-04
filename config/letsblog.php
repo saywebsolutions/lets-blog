@@ -91,7 +91,13 @@ return [
         '/blog/{any}' => [
             'uses' => '\SayWebSolutions\LetsBlog\Http\Controllers\PostController@post',
             'where' => ['any' => '(.*)']
+        ],
+
+        '/{any}' => [
+            'uses' => '\SayWebSolutions\LetsBlog\Http\Controllers\PostController@post',
+            'where' => ['any' => '(.*)']
         ]
+
     ],
 
     'nav' => [
