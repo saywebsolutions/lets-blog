@@ -23,9 +23,24 @@
 
             @else
 
+{{--
                 <div class="col-xs-12">
                     @section ('layout.view')
                         @include ($view)
+                    @show
+                </div>
+--}}
+
+                <div class="col-md-8 col-lg-9">
+                    @section ('layout.view')
+                        @include ($view)
+                    @show
+                </div>
+
+                <br class="hidden-md hidden-lg" style="clear:both;">
+
+                <div class="col-md-4 col-lg-3">
+                    @section ('layout.sidebar')
                     @show
                 </div>
 
