@@ -23,7 +23,7 @@
             
                             <p>
                                 @foreach ($p->tags as $t)
-                                    <a href="{{ $t->url }}" class="btn btn-xs btn-primary">{{ $t->name }}</a>
+                                    <a href="{{ $t->url }}">{{ $t->name }}</a>&nbsp;
                                 @endforeach
             
                                 @if ($p->series)
