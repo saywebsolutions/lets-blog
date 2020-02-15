@@ -69,7 +69,7 @@
     @endif
 
     @if ($post->tags)
-        @include (lb_view('components.tags'), ['tags' => $post->tags])
+        @include (lb_view('components.tags'), ['tags' => $post->tags()->withCount('posts')->get()])
     @endif
 
     @parent

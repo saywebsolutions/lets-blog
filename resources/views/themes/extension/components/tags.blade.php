@@ -9,7 +9,9 @@
     <ul class="list-group">
         @foreach ($tags as $t)
             <a class="list-group-item" href="{{ $t->url }}">{{ $t->name }}
-                <span class="badge">{{ $t->posts_count }}</span>
+                @if ( ! empty($t->posts_count))
+                    <span class="badge">{{ $t->posts_count }}</span>
+                @endif
             </a>
         @endforeach
     </ul>
