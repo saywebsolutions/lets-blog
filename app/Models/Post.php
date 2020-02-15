@@ -31,7 +31,14 @@ class Post extends Model
 
     public function scopeSearch($q, $search)
     {
-        return $q->whereRaw("MATCH (`title`, `body`) AGAINST (?)", [$search]);
+        switch (config('database.default')) {
+            case 'sqlite':
+                return $q->whereRaw("`title` LIKE '%{$search}%'");
+                break;
+            default:
+                return $q->whereRaw("MATCH (`title`, `body`) AGAINST (?)", [$search]);
+                break;
+        }
     }
 
     public function getUrlAttribute()

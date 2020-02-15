@@ -26,7 +26,16 @@ class LetsBlog
 
     public static function related(Post $post, $limit = 6)
     {
-        $q = Post::selectRaw("*, MATCH(title, body) AGAINST(?) AS score", [$post->title])->where('published_at', '<>', 'NULL')->search($post->title)->where('type', 'post')->where('status', 'active')->where('id', '<>', $post->id)->orderBy('score', 'desc')->with('tags', 'series')->limit($limit);
+        switch (config('database.default')) {
+            case 'sqlite':
+                $q = Post::selectRaw("*, ABS(RANDOM()) AS score")->where('published_at', '<>', 'NULL')->search($post->title)->where('type', 'post')->where('status', 'active')->where('id', '<>', $post->id)->orderBy('score', 'desc')->with('tags', 'series')->limit($limit);
+                break;
+            
+            default:
+                $q = Post::selectRaw("*, MATCH(title, body) AGAINST(?) AS score", [$post->title])->where('published_at', '<>', 'NULL')->search($post->title)->where('type', 'post')->where('status', 'active')->where('id', '<>', $post->id)->orderBy('score', 'desc')->with('tags', 'series')->limit($limit);
+                
+                break;
+        }
 
         if ((int)$post->series_id > 0) {
             $q->where('series_id', '<>', $post->series_id);
@@ -78,9 +87,26 @@ class LetsBlog
         return Post::where('published_at', '<>', 'NULL')->where('type', 'post')->where('status', 'active')->count();
     }
 
-    public static function tags()
+    public static function tags($limit=false)
     {
-        return Tag::withCount('posts')->orderBy('slug', 'asc')->get();
+        $q = Tag::withCount('posts')->orderBy('slug', 'asc');
+
+        if( ! empty($limit)){
+            $q = $q->limit($limit);
+        }
+
+        return $q->get();
+    }
+
+    public static function popularTags($limit=false)
+    {
+        $q = Tag::withCount('posts')->orderBy('slug', 'asc')->has('posts', '>', 1);
+
+        if( ! empty($limit)){
+            $q = $q->limit($limit);
+        }
+
+        return $q->get();
     }
 
     public static function publishedWhereTag($tag)

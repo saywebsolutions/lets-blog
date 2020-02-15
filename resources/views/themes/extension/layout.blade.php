@@ -40,8 +40,17 @@
                 <br class="hidden-md hidden-lg" style="clear:both;">
 
                 <div class="col-md-4 col-lg-3">
+
+                    @include (lb_view('components.search'))
+
+                    <br>
+
                     @section ('layout.sidebar')
+
+                        @include (lb_view('components.tags'), ['title' => 'Popular Tags', 'tags' => LetsBlog::popularTags(10)])
+
                     @show
+
                 </div>
 
             @endif

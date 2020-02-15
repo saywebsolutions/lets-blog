@@ -69,23 +69,7 @@
     @endif
 
     @if ($post->tags)
-
-        <div class="panel panel-default">
-
-            <div class="panel-heading">
-                <h1 class="panel-title">
-                    <i class="fa fa-tags" aria-hidden="true"></i>&nbsp;&nbsp;Tags:
-                </h1>
-            </div>
-
-            <ul class="list-group">
-                @foreach ($post->tags as $t)
-                    <a class="list-group-item" href="{{ $t->url }}">{{ $t->name }}</a>
-                @endforeach
-            </ul>
-
-        </div>
-
+        @include (lb_view('components.tags'), ['tags' => $post->tags])
     @endif
 
     @parent
