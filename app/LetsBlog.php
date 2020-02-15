@@ -80,7 +80,7 @@ class LetsBlog
 
     public static function tags()
     {
-        return Tag::orderBy('slug', 'asc')->get();
+        return Tag::withCount('posts')->orderBy('slug', 'asc')->get();
     }
 
     public static function publishedWhereTag($tag)

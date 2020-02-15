@@ -27,10 +27,8 @@ class Tag extends Model
 
     public static function updateCounts()
     {
-//        foreach(self::withCount('posts')->get() as $tag) {
-        foreach (self::get() as $tag) {
-            //TODO
-            dd($tag);
+        //https://laravel.com/docs/5.6/eloquent-relationships#counting-related-models
+        foreach(self::withCount('posts')->get() as $tag) {
             if ($tag->count != $tag->posts_count) {
                 $tag->count = $tag->posts_count;
                 $tag->save();
