@@ -12,7 +12,7 @@ class LetsBlog
 {
     public static function published()
     {
-        return Post::with('tags', 'series')->orderBy('published_at', 'desc')->paginate(config('letsblog.posts.perpage'));
+        return Post::with('tags', 'series')->where('status', 'active')->orderBy('published_at', 'desc')->paginate(config('letsblog.posts.perpage'));
     }
 
     public static function search($q = '')

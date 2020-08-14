@@ -47,7 +47,7 @@
 
                     @section ('layout.sidebar')
 
-                        @include (lb_view('components.tags'), ['title' => 'Popular Tags', 'tags' => LetsBlog::popularTags(10)])
+                        @include (lb_view('components.tags'), ['title' => 'Popular Tags', 'tags' => \LetsBlog::popularTags(10)])
 
                     @show
 
