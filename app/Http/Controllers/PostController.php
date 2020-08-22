@@ -42,6 +42,7 @@ class PostController extends BaseController
         return view('letsblog::themes.master', [
             'view' => lb_view('post.show'),
             'post' => $post,
+            'pageTitle' => $post->title,
             'series' => LetsBlog::series(),
             'top' => LetsBlog::top(),
 //            'related' => LetsBlog::related($post)
@@ -54,6 +55,7 @@ class PostController extends BaseController
             'view' => lb_view('post.page'),
             'type' => 'page',
             'post' => $post,
+            'pageTitle' => $post->title,
             'series' => LetsBlog::series(),
             'top' => LetsBlog::top()
         ]);
