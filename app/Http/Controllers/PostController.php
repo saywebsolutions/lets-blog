@@ -43,6 +43,8 @@ class PostController extends BaseController
             'view' => lb_view('post.show'),
             'post' => $post,
             'pageTitle' => $post->title,
+            'pageDescription' => $post->meta,
+            'pageKeywords' => $post->keywords,
             'series' => LetsBlog::series(),
             'top' => LetsBlog::top(),
 //            'related' => LetsBlog::related($post)
@@ -56,6 +58,8 @@ class PostController extends BaseController
             'type' => 'page',
             'post' => $post,
             'pageTitle' => $post->title,
+            'pageDescription' => $post->meta,
+            'pageKeywords' => $post->keywords,
             'series' => LetsBlog::series(),
             'top' => LetsBlog::top()
         ]);
