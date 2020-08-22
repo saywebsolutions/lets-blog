@@ -35,7 +35,12 @@
                                 {{ $p->meta }}
                             </p>
         
-                            <div class="post-panel-footer"><a href="{{ $p->url }}">Read</a><span class="text-muted pull-right">{{ $p->published_at->format('Y-m-d') }}<span></div>
+                            <div class="post-panel-footer">
+                                <a href="{{ $p->url }}">Read</a>
+                                @if ( ! empty($p->published_at))
+                                    <span class="text-muted pull-right">{{ $p->published_at->format('Y-m-d') }}<span>
+                                @endif
+                            </div>
             
                         </div>
                     </div>
