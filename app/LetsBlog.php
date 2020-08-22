@@ -100,13 +100,20 @@ class LetsBlog
 
     public static function popularTags($limit=false)
     {
-        $q = Tag::withCount('posts')->orderBy('slug', 'asc')->has('posts', '>', 1);
+        $popTags = \Cache::remember($limit.'TopTags', 60, function () use ($limit) {
 
-        if( ! empty($limit)){
-            $q = $q->limit($limit);
-        }
+            $tags = Tag::withCount('posts')->has('posts', '>', 1)->get();
 
-        return $q->get();
+            $sortedQ = $tags->sortByDesc('posts_count');
+            
+            if( ! empty($limit)){
+                $sortedQ = $sortedQ->take($limit);
+            }
+
+            return $sortedQ->all();
+        });
+
+        return $popTags;
     }
 
     public static function publishedWhereTag($tag)
