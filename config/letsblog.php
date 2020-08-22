@@ -123,6 +123,18 @@ return [
         'facebook' => 'saywebsolutions',
     ],
 
+    'comments' => [
+
+        'enabled' => false,
+
+        'disqus' => [
+
+            //add your disqus shortname here
+            'shortname' => '',
+
+        ],
+    ],
+
     'footer' => [
         'copy' => true,
         'plug' => true,
